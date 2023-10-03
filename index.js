@@ -11,7 +11,7 @@ client.on('ready', () => {
 client.on('messageCreate', msg => {
     if (msg.author.bot) return;
 
-    if (checkIfRupert(msg.content)) {
+    if (checkIfRupert(msg.content) || msg.mentions.has(client.user.id)) {
         const currentTime = new Date().toLocaleString();
         const serverID = msg.guild.id;
         const channelID = msg.channel.id; 
@@ -23,7 +23,8 @@ client.on('messageCreate', msg => {
 });
 
 function checkIfRupert(message) {
-    const words = message.toLowerCase().split(' ');
+    const cleanedMessage = message.toLowerCase().replace(/[^\w\s]/g, '');
+    const words = cleanedMessage.split(' ');
     return words.includes('rupert');
 }
 
